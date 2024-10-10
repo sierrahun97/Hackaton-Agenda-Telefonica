@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -6,7 +7,7 @@ public class Main {
         Agenda agenda = new Agenda();
         Scanner scanner = new Scanner(System.in);
 
-        int opcion;
+        int opcion = 0;
         do {
             System.out.println("\n*--Menú de agenda de contactos--*");
             System.out.println("\n1. Añadir contacto.");
@@ -17,8 +18,15 @@ public class Main {
             System.out.println("6. Espacio disponible en la agenda de contactos.");
             System.out.println("7. Finalizar menú.");
             System.out.println("\nIngresa un número para acceder al menú:");
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+
+            try {
+                opcion = scanner.nextInt();
+                scanner.nextLine(); // Limpiar el buffer
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debes ingresar un número válido.");
+                scanner.nextLine(); // Limpiar buffer
+                continue;
+            }
 
             switch (opcion) {
                 case 1:
