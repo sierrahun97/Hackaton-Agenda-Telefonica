@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 
@@ -57,8 +56,10 @@ public class Agenda {
         }
         listaContactos.sort(Comparator.comparing(Contacto::getNombre)
                 .thenComparing(Contacto::getApellido));
+        int contador = 1;
         for (Contacto c : listaContactos) {
-            System.out.println(c.getNombre() + " " + c.getApellido() + " " + c.getTelefono());
+            System.out.println(contador + ". " + c.getNombre() + " " + c.getApellido() + "-->" + c.getTelefono());
+            contador++;
         }
     }
 
@@ -73,9 +74,9 @@ public class Agenda {
         return false;
     }
 
-    public void eliminarContacto(Contacto contacto){
-        for (Contacto e : listaContactos){
-            if (e.getNombre().equalsIgnoreCase(contacto.getNombre()) && e.getApellido().equalsIgnoreCase(contacto.getApellido())){
+    public void eliminarContacto(Contacto contacto) {
+        for (Contacto e : listaContactos) {
+            if (e.getNombre().equalsIgnoreCase(contacto.getNombre()) && e.getApellido().equalsIgnoreCase(contacto.getApellido())) {
                 listaContactos.remove(e);
                 System.out.println("El contacto ha sido eliminado correctamente.");
                 return;
@@ -84,8 +85,30 @@ public class Agenda {
         System.out.println("El contacto que se intentó eliminar no existe.");
     }
 
-
+    public void modificarContacto(String nombre, String apellido, int telefono) {
+        boolean encontrado = false;
+        for (Contacto e : listaContactos) {
+            if (e.getNombre().equalsIgnoreCase(nombre) &&
+                    e.getApellido().equalsIgnoreCase(apellido)) {
+                e.setTelefono(telefono);
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("El contacto no se ha encontrado: ");
+        }
     }
+
+    public void agendaLlena() {
+        if (listaContactos.size() >= maxContactos) {
+            System.out.println("La agenda está llena, no se pueden agregar más contactos.");
+        }
+    }
+    public void espaciosLibres(){
+        System.out.println("Los espacios disponibles en la agenda son: " + (maxContactos - listaContactos.size()) );
+    }
+}
 
 
 
